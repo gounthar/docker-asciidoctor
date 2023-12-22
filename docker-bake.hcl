@@ -18,6 +18,7 @@ target "asciidoctor-minimal" {
   dockerfile = "Dockerfile"
   context = "."
   target = "main-minimal"
+  platforms = ["linux/amd64", "linux/arm64"] // Add the platforms you want to build for here
 }
 
 // This image is only used for intermediate steps
@@ -25,12 +26,14 @@ target "erd-builder" {
   dockerfile = "Dockerfile"
   context = "."
   target = "erd-builder"
+  platforms = ["linux/amd64", "linux/arm64"] // Add the platforms you want to build for here
 }
 
 target "asciidoctor" {
   dockerfile = "Dockerfile"
   context = "."
   target = "main"
+  platforms = ["linux/amd64", "linux/arm64"] // Add the platforms you want to build for here
   tags = [
     "${IMAGE_NAME}",
     notequal("", IMAGE_VERSION) ? "${IMAGE_NAME}:${IMAGE_VERSION}" : "", // Only used when deploying on a tag
