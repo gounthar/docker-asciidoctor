@@ -8,6 +8,7 @@ GIT_REF = $(GIT_TAG)
 endif
 
 PANDOC_VERSION ?= 2.10.1
+ARCH := $(shell uname -m | sed 's/x86_64/amd64/')
 
 all: build test README
 
@@ -36,7 +37,7 @@ cache:
 
 cache/pandoc-$(PANDOC_VERSION)-linux.tar.gz: cache
 	curl -sSL -o "$(CURDIR)/cache/pandoc-$(PANDOC_VERSION)-linux.tar.gz" \
-		https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux-amd64.tar.gz
+		https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux-$(ARCH).tar.gz
 
 cache/pandoc-$(PANDOC_VERSION)/bin/pandoc: cache/pandoc-$(PANDOC_VERSION)-linux.tar.gz
 	tar xzf "$(CURDIR)/cache/pandoc-$(PANDOC_VERSION)-linux.tar.gz" -C "$(CURDIR)/cache"
