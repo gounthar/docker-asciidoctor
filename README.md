@@ -8,7 +8,7 @@ This Docker image provides:
 
 -   [Asciidoctor Diagram](https://asciidoctor.org/docs/asciidoctor-diagram/) 2.2.14 with ERD and Graphviz integration (supports plantuml and graphiz diagrams)
 
--   [Asciidoctor PDF](https://asciidoctor.org/docs/asciidoctor-pdf/) 2.3.9
+-   [Asciidoctor PDF](https://asciidoctor.org/docs/asciidoctor-pdf/) 2.3.10
 
 -   [Asciidoctor EPUB3](https://asciidoctor.org/docs/asciidoctor-epub3/) 1.5.1
 
@@ -16,7 +16,7 @@ This Docker image provides:
 
 -   [Asciidoctor Mathematical](https://github.com/asciidoctor/asciidoctor-mathematical) 0.3.5
 
--   [Asciidoctor reveal.js](https://docs.asciidoctor.org/reveal.js-converter/latest/) 5.0.1
+-   [Asciidoctor reveal.js](https://docs.asciidoctor.org/reveal.js-converter/latest/) 5.1.0
 
 -   [AsciiMath](https://rubygems.org/gems/asciimath)
 
@@ -48,11 +48,15 @@ This image uses the Go-based [erd-go](https://github.com/kaishuu0123/erd-go/) in
 
 Just run:
 
-    docker run -it -u $(id -u):$(id -g) -v <your directory>:/documents/ asciidoctor/docker-asciidoctor
+``` bash
+docker run -it -u $(id -u):$(id -g) -v <your directory>:/documents/ asciidoctor/docker-asciidoctor
+```
 
 or the following for [Podman](https://podman.io/):
 
-    podman run -it -v <your directory>:/documents/ docker.io/asciidoctor/docker-asciidoctor
+``` bash
+podman run -it -v <your directory>:/documents/ docker.io/asciidoctor/docker-asciidoctor
+```
 
 Docker/Podman maps your directory with */documents* directory in the container.
 
@@ -67,43 +71,59 @@ You can find several examples below.
 
 -   To run Asciidoctor on a basic AsciiDoc file:
 
-        asciidoctor sample.adoc
-        asciidoctor-pdf sample.adoc
-        asciidoctor-epub3 sample.adoc
+    ``` bash
+    asciidoctor sample.adoc
+    asciidoctor-pdf sample.adoc
+    asciidoctor-epub3 sample.adoc
+    ```
 
 -   To run AsciiDoc on an AsciiDoc file that contains diagrams:
 
-        asciidoctor -r asciidoctor-diagram sample-with-diagram.adoc
-        asciidoctor-pdf -r asciidoctor-diagram sample-with-diagram.adoc
-        asciidoctor-epub3 -r asciidoctor-diagram sample-with-diagram.adoc
+    ``` bash
+    asciidoctor -r asciidoctor-diagram sample-with-diagram.adoc
+    asciidoctor-pdf -r asciidoctor-diagram sample-with-diagram.adoc
+    asciidoctor-epub3 -r asciidoctor-diagram sample-with-diagram.adoc
+    ```
 
 -   To run AsciiDoc on an AsciiDoc file that contains latexmath and stem blocks:
 
-        asciidoctor -r asciidoctor-mathematical sample-with-diagram.adoc
-        asciidoctor-pdf -r asciidoctor-mathematical sample-with-diagram.adoc
-        asciidoctor-epub3 -r asciidoctor-mathematical sample-with-diagram.adoc
+    ``` bash
+    asciidoctor -r asciidoctor-mathematical sample-with-diagram.adoc
+    asciidoctor-pdf -r asciidoctor-mathematical sample-with-diagram.adoc
+    asciidoctor-epub3 -r asciidoctor-mathematical sample-with-diagram.adoc
+    ```
 
 -   To use Asciidoctor Confluence:
 
-        asciidoctor-confluence --host HOSTNAME --spaceKey SPACEKEY --title TITLE --username USER --password PASSWORD sample.adoc
+    ``` bash
+    asciidoctor-confluence --host HOSTNAME --spaceKey SPACEKEY --title TITLE --username USER --password PASSWORD sample.adoc
+    ```
 
 -   To use Asciidoctor reveal.js with local downloaded reveal.js:
 
-        asciidoctor-revealjs sample-slides.adoc
-        asciidoctor-revealjs -r asciidoctor-diagram sample-slides.adoc
+    ``` bash
+    asciidoctor-revealjs sample-slides.adoc
+    asciidoctor-revealjs -r asciidoctor-diagram sample-slides.adoc
+    ```
 
 -   To use Asciidoctor reveal.js with online reveal.js:
 
-        asciidoctor-revealjs -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.9.2 sample-slides.adoc
-        asciidoctor-revealjs -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.9.2 -r asciidoctor-diagram sample-slides.adoc
+    ``` bash
+    asciidoctor-revealjs -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.9.2 sample-slides.adoc
+    asciidoctor-revealjs -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.9.2 -r asciidoctor-diagram sample-slides.adoc
+    ```
 
 -   To convert files in batch:
 
-        docker run --rm -u $(id -u):$(id -g) -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc
+    ``` bash
+    docker run --rm -u $(id -u):$(id -g) -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc
+    ```
 
     or:
 
-        podman run --rm -v $(pwd):/documents/ docker.io/asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc
+    ``` bash
+    podman run --rm -v $(pwd):/documents/ docker.io/asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc
+    ```
 
 ## How to contribute / do it yourself?
 
@@ -127,16 +147,20 @@ You need the following tools:
 
 -   You just have to run the Bats test suite, from the repository root:
 
-        make test
+    ``` bash
+    make test
+    ```
 
 #### Include test in your build pipeline or test manually
 
 You can use Bats directly to test the image.
 Optionally, you can specify a custom image name:
 
-    # If you want to use a custom name for the image, OPTIONAL
-    export DOCKER_IMAGE_NAME_TO_TEST=your-image-name
-    bats tests/*.bats
+``` bash
+# If you want to use a custom name for the image, OPTIONAL
+export DOCKER_IMAGE_NAME_TO_TEST=your-image-name
+bats tests/*.bats
+```
 
 ### How to scan for vulnerabilities?
 
@@ -146,7 +170,9 @@ Optionally, you can specify a custom image name:
 -   Run the following command to replicate the repo’s `CVE Scan` pipeline on an image build locally.
     Note the pipeline runs nightly on the latest release version, so it can display issues solved in main branch.
 
-        trivy image --severity HIGH,CRITICAL asciidoctor:latest
+    ``` bash
+    trivy image --severity HIGH,CRITICAL asciidoctor:latest
+    ```
 
 #### Deploy
 
