@@ -7,7 +7,7 @@ else
 GIT_REF = $(GIT_TAG)
 endif
 
-PANDOC_VERSION ?= 2.10.1
+PANDOC_VERSION ?= 2.12
 ARCH := $(shell uname -m | sed 's/x86_64/amd64/')
 
 all: build test README
